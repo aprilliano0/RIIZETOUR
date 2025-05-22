@@ -6,6 +6,7 @@ int main()
   for(i=0; i<n; i++){
 	cout <<x[i]<<" "; 
   }
+ //looping buat tukar posisi
  for(i=0; i<n-1; i++){
     for(j=i+1; j<n; j++){
         if(x[i]>x[j]){
