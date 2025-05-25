@@ -5,12 +5,14 @@
 
 using namespace std;
 
+//struktur data untuk menyimpan inforamasi tiket
 struct Item {
     string nama;
     double harga;
     string seat;
 };
 
+//struktur linked list untuk menyimpan order pembelian tiket
 struct Order {
     string nama;
     double total_harga;
@@ -18,6 +20,7 @@ struct Order {
     Order* next;
 };
 
+//fungsi login dengan 3 kali percobaan dan validasi membership
 void login() {
     system("cls");
     string username, password, membership;
@@ -44,7 +47,7 @@ void login() {
             } else {
                 cout << "\nNomor membership tidak valid. Silakan coba lagi.\n";
                 system("pause");
-                return login();
+                return login(); //coba lagi
             }
         } else {
             percobaan++;
@@ -75,6 +78,7 @@ void ketentuanUmum() {
     system("pause");
 }
 
+//menampilkan daftar semua tiket
 void daftarTiket(const Item tiket[], int jumlah_tiket, string seatlist) {
     system("cls");
     cout << "\n=== " << seatlist << " ===\n";
@@ -85,6 +89,7 @@ void daftarTiket(const Item tiket[], int jumlah_tiket, string seatlist) {
     cout << setfill('-') << setw(71) << "-" << endl;
     cout << setfill(' ');
 
+    //menampilkan tabel tiket
     for (int i = 0; i < jumlah_tiket; i++) {
         cout << setw(6) << i + 1
              << setw(30) << tiket[i].nama
@@ -93,6 +98,7 @@ void daftarTiket(const Item tiket[], int jumlah_tiket, string seatlist) {
     }
 }
 
+//mencari tiket berdasarkan kategori seat
 void cariTiket(const Item tiket[], int jumlah_tiket, const string& kategori) {
     system("cls");
     bool ditemukan = false;
@@ -109,12 +115,13 @@ void cariTiket(const Item tiket[], int jumlah_tiket, const string& kategori) {
     system("pause");
 }
 
+//menampilkan tiket secara urut berdasarkan tingkat kepadatan
 void urutkanTiket(const Item tiket[], int jumlah_tiket, bool dariLimited = true) {
     system("cls");
     cout << "\n=== Tiket Berdasarkan Kepadatan ===\n";
     cout << "(Urutan: " << (dariLimited ? "Limited Slot ke Reguler" : "Reguler ke Limited Slot") << ")\n";
 
-    if (dariLimited) {
+    if (dariLimited) { //dari limited ke reguler
         for (int i = 0; i < jumlah_tiket; i++) {
             if (tiket[i].nama == "CAT 1A Soundcheck" || tiket[i].nama == "CAT 1B Soundcheck" ||
                 tiket[i].nama == "CAT 1C" || tiket[i].nama == "CAT 1D") {
@@ -130,7 +137,7 @@ void urutkanTiket(const Item tiket[], int jumlah_tiket, bool dariLimited = true)
             }
         }
     } else {
-        for (int i = 0; i < jumlah_tiket; i++) {
+        for (int i = 0; i < jumlah_tiket; i++) { //dari reguler ke limited
             if (!(tiket[i].nama == "CAT 1A Soundcheck" || tiket[i].nama == "CAT 1B Soundcheck" ||
                   tiket[i].nama == "CAT 1C" || tiket[i].nama == "CAT 1D")) {
                 cout << "[REGULER]       " << tiket[i].nama << " (" << tiket[i].seat << ", Rp " 
@@ -149,12 +156,13 @@ void urutkanTiket(const Item tiket[], int jumlah_tiket, bool dariLimited = true)
     system("pause");
 }
 
+//menambah tiket ke daftar  order (linked list) 
 Order* tambahOrder(Order* head, Item tiket) {
     double pajak = tiket.harga * 0.1;
     double total = tiket.harga + pajak;
 
     Order* baru = new Order{tiket.nama, total, tiket.seat, nullptr};
-    if (!head) return baru;
+    if (!head) return baru; //jika belum ada order
 
     Order* current = head;
     while (current->next) current = current->next;
@@ -162,6 +170,7 @@ Order* tambahOrder(Order* head, Item tiket) {
     return head;
 }
 
+//membeli tiket input nomor tiket lalu tambah ke order
 Order* beliTiket(const Item tiket[], int jumlah_tiket, Order* head, string seatlist) {
     daftarTiket(tiket, jumlah_tiket, seatlist);
     int pilihan;
@@ -171,7 +180,7 @@ Order* beliTiket(const Item tiket[], int jumlah_tiket, Order* head, string seatl
     if (pilihan >= 1 && pilihan <= jumlah_tiket) {
         head = tambahOrder(head, tiket[pilihan - 1]);
         cout << "\nTiket berhasil dibeli!\n";
-        // Tampilkan rincian tiket yang dibeli
+        // menampilkan rincian tiket yang sudah dibeli
         double pajak = tiket[pilihan - 1].harga * 0.1;
         double total = tiket[pilihan - 1].harga + pajak;
         cout << "-----------------------------\n";
@@ -188,10 +197,11 @@ Order* beliTiket(const Item tiket[], int jumlah_tiket, Order* head, string seatl
     return head;
 }
 
+//mwnampilkan semua order yang sudah dibeli
 void tampilkanOrder(Order* head) {
     system("cls");
     if (!head) {
-        cout << "\nBelum ada order.\n";
+        cout << "\nBelum ada order yang dibuat!.\n";
     } else {
         cout << "\n=== Daftar Order ===\n";
         int no = 1;
