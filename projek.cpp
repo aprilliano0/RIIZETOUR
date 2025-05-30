@@ -22,7 +22,7 @@ struct Order {
 
 //fungsi login dengan 3 kali percobaan dan validasi membership
 void login() {
-    system("cls");
+    system("cls");  // Membersihkan layar terminal
     string username, password, membership;
     int percobaan = 0;
     const int batas_percobaan = 3;
@@ -34,7 +34,7 @@ void login() {
         cin >> username;
         cout << "Password: ";
         cin >> password;
-
+        // Validasi username dan password
         if (username == "zizi" && password == "12345") {
             cout << "\nMasukkan Nomor Membership Anda: ";
             cin >> membership;
@@ -55,12 +55,12 @@ void login() {
             system("pause");
         }
     }
-
+    // Jika gagal lebih dari 3 kali
     cout << "\nAnda telah gagal login lebih dari " << batas_percobaan << " kali.\n";
     cout << "Akses ditolak. Program akan keluar.\n";
     exit(0);
 }
-
+// Menampilkan peraturan umum konser
 void ketentuanUmum() {
     system("cls");
     cout << "\n=== Ketentuan Umum 2025 RIIZE FAN-CON RIIZING DAY in JAKARTA ===\n\n";
