@@ -156,6 +156,20 @@ void urutkanTiket(const Item tiket[], int jumlah_tiket, bool dariLimited = true)
     system("pause");
 }
 
+// Fungsi Bubble Sort untuk mengurutkan tiket dari termurah ke termahal
+void sortbiaya(Item tiket[], int jumlah_tiket) {
+    for (int i = 0; i < jumlah_tiket - 1; i++) {
+        for (int j = 0; j < jumlah_tiket - i - 1; j++) {
+            if (tiket[j].harga > tiket[j + 1].harga) {
+                Item temp = tiket[j];
+                tiket[j] = tiket[j + 1];
+                tiket[j + 1] = temp;
+            }
+        }
+    }
+    cout << "Tiket berhasil diurutkan dari termurah ke termahal\n";
+    system("pause");
+}
 //menambah tiket ke daftar  order (linked list) 
 Order* tambahOrder(Order* head, Item tiket) {
     double pajak = tiket.harga * 0.1;
@@ -287,9 +301,10 @@ int main() { // Fungsi utama program
         cout << "1. Keterangan Umum\n";
         cout << "2. Cari Tiket Berdasarkan Seatplan\n";
         cout << "3. Urutkan Tiket Berdasarkan Kepadatan\n";
-        cout << "4. Beli Tiket\n";
-        cout << "5. Tampilkan Order\n";
-        cout << "6. Hapus Order\n";
+        cout << "4. Urutkan Tiket Berdasarkan Harga (Termurah-Termahal)\n";
+        cout << "5. Beli Tiket\n";
+        cout << "6. Tampilkan Order\n";
+        cout << "7. Hapus Order\n";
         cout << "0. Keluar\n";
         cout << "Pilihan: ";
         cin >> pilihan;
@@ -316,12 +331,16 @@ int main() { // Fungsi utama program
                 break;
             }
             case 4:
-                head = beliTiket(tiket, jumlah_tiket, head, "Daftar Tiket");
+                sortbiaya(tiket, jumlah_tiket);
+                daftarTiket(tiket, jumlah_tiket, "Tiket Setelah Diurutkan Berdasarkan Harga");
                 break;
             case 5:
-                tampilkanOrder(head);
+                head = beliTiket(tiket, jumlah_tiket, head, "Daftar Tiket");
                 break;
             case 6:
+                tampilkanOrder(head);
+                break;
+            case 7:
                 head = hapusOrder(head);
                 break;
             case 0:
@@ -335,5 +354,4 @@ int main() { // Fungsi utama program
     } while (pilihan != 0);
 
     return 0;
-
 }
