@@ -213,7 +213,7 @@ void tampilkanOrder(Order* head) {
     }
     system("pause");
 }
-
+// Menghapus order pertama dalam linked list
 Order* hapusOrder(Order* head) {
     system("cls");
     if (!head) {
@@ -228,7 +228,7 @@ Order* hapusOrder(Order* head) {
     system("pause");
     return head;
 }
-
+// Menyimpan data harga ke file dummy
 void simpanHargaKeFileDummy(const Item tiket[], int jumlah) {
     FILE* file = fopen("harga.txt", "w");
     if (!file) {
@@ -241,7 +241,7 @@ void simpanHargaKeFileDummy(const Item tiket[], int jumlah) {
     fclose(file);
     cout << "Data harga berhasil disimpan ke harga.txt\n";
 }
-
+// Membaca data harga dari file dummy
 void bacaHargaDariFileDummy(Item tiket[], int &jumlah) {
     FILE* file = fopen("harga.txt", "r");
     if (!file) {
@@ -261,7 +261,8 @@ void bacaHargaDariFileDummy(Item tiket[], int &jumlah) {
     cout << "Data harga berhasil dibaca dari harga.txt\n";
 }
 
-int main() {
+int main() { // Fungsi utama program
+    // Inisialisasi array tiket
     Item tiket[] = {
         {"CAT 1A Soundcheck", 2700000, "standing"},
         {"CAT 1B Soundcheck", 2700000, "standing"},
@@ -277,7 +278,7 @@ int main() {
     int jumlah_tiket = sizeof(tiket) / sizeof(tiket[0]);
     Order* head = nullptr;
 
-    login();
+    login(); // Login dulu sebelum lanjut
 
     int pilihan;
     do {
@@ -292,7 +293,7 @@ int main() {
         cout << "0. Keluar\n";
         cout << "Pilihan: ";
         cin >> pilihan;
-
+        // Menu switch untuk pilihan pengguna
         switch (pilihan) {
             case 1:
                 ketentuanUmum();
